@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 // require from the controllers folder
-const { sayHi } = require('../controllers/user.js');
+const { signup } = require('../controllers/user');
 
 // fetch all users
-router.get('/', sayHi);
+// test on postman localhost:8080/api/register
+router.post('/signup', signup);
 
 module.exports = router;
