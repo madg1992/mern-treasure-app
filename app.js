@@ -7,7 +7,8 @@ const cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator');
 require('dotenv').config();
 
-const userRoutes = require('./routes/user');
+// import routes
+const userAuthRoutes = require('./routes/userAuth');
 
 // initialize app
 const app = express();
@@ -33,7 +34,7 @@ app.use(expressValidator());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes middleware
-app.use('/api', userRoutes);
+app.use('/api', userAuthRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`);

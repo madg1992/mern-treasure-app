@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-// require from the controllers folder
-const { register, login, logout } = require('../controllers/user');
+// authentication middleware from the controllers folder
+const { register, login, logout, requireSignin } = require('../controllers/userAuth');
 
 // validator middleware
 const { userSignupValidator } = require("../validation");
@@ -16,5 +16,13 @@ router.post('/register', userSignupValidator, register);
 router.post('/login', login);
 
 router.get('/logout', logout);
+
+// test route ONLY
+// only authorized logged users can access this route
+/*
+router.get('/SMU', requireSignin, (req, res) => {
+    res.send("Test route")
+});
+*/
 
 module.exports = router;

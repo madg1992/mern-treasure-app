@@ -65,3 +65,12 @@ exports.logout = (req, res) => {
     res.clearCookie('t');
     res.json({ message: 'Log Out success' });
 };
+
+// for expressJWT to work you need to download cookie-parser
+// this method is used so that only authorized users can access certain 
+// pages of the app
+// userProperty is the property where the JWT payloads will be attached to each request, so we can access the data using
+exports.requireSignin = expressJwt({
+    secret: process.env.JWT_SECRET,
+    userProperty: 'auth'
+});
