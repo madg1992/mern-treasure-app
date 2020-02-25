@@ -2,10 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 // require from the controllers folder
-const { signup } = require('../controllers/user');
+const { register } = require('../controllers/user');
+
+// validator middleware
+const { userSignupValidator } = require("../validation");
+
 
 // fetch all users
 // test on postman localhost:8080/api/register
-router.post('/signup', signup);
+// validate user input from the req.body with the middleware
+router.post('/register', userSignupValidator, register);
 
 module.exports = router;

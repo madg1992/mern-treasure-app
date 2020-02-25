@@ -1,6 +1,6 @@
 const User = require('../models/user');
 
-exports.signup = (req, res) => {
+exports.register = (req, res) => {
     console.log("req.body", req.body);
     const user = new User(req.body);
     user.save((err, user) => {
@@ -9,6 +9,10 @@ exports.signup = (req, res) => {
                 error: 'Email is taken'
             });
         }
+        // we set salt and hased_password as undefined 
+        // so we don't expose user's credentials
+        user.salt = undefined;
+        user.hashed_password = undefined;
         res.json({
             user
         });
