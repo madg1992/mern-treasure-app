@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // require from the controllers folder
-const { register, login } = require('../controllers/user');
+const { register, login, logout } = require('../controllers/user');
 
 // validator middleware
 const { userSignupValidator } = require("../validation");
@@ -14,5 +14,7 @@ const { userSignupValidator } = require("../validation");
 router.post('/register', userSignupValidator, register);
 
 router.post('/login', login);
+
+router.get('/logout', logout);
 
 module.exports = router;

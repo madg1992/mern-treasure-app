@@ -56,3 +56,12 @@ exports.login = (req, res) => {
         return res.json({ token, user: { _id, email, name, role } });
     });
 };
+
+// logout method which clears the cookie
+// REM: when the user logins, the token is saved in res.cookie t
+// when user logs out, the cookie will be cleared
+// so that unauthorized users won't be able to access certain pages
+exports.logout = (req, res) => {
+    res.clearCookie('t');
+    res.json({ message: 'Log Out success' });
+};
