@@ -16,8 +16,6 @@ const categoryRoutes = require('./routes/category');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-
-
 // If deployed, use the deployed database. Otherwise use the local treasure_app database
 const DATABASE = process.env.DATABASE;
 
@@ -28,7 +26,7 @@ connection.once('open', () => {
     console.log("MongoDB database connection established successfully");
 })
 
-//middleware
+// Middleware
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
