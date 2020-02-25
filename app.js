@@ -10,6 +10,7 @@ require('dotenv').config();
 // import routes
 const userAuthRoutes = require('./routes/userAuth');
 const userRoutes = require('./routes/user');
+const categoryRoutes = require('./routes/category');
 
 // initialize app
 const app = express();
@@ -37,6 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes middleware
 app.use('/api', userAuthRoutes);
 app.use('/api', userRoutes);
+app.use('/api', categoryRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`);
