@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // require from the controllers folder
-const { register } = require('../controllers/user');
+const { register, login } = require('../controllers/user');
 
 // validator middleware
 const { userSignupValidator } = require("../validation");
@@ -12,5 +12,7 @@ const { userSignupValidator } = require("../validation");
 // test on postman localhost:8080/api/register
 // validate user input from the req.body with the middleware
 router.post('/register', userSignupValidator, register);
+
+router.post('/login', login);
 
 module.exports = router;
