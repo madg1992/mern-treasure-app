@@ -3,7 +3,7 @@ const User = require('../models/user');
 
 // the id will be coming from the route parameter
 exports.userById = (req, res, next, id) => {
-    // find user by id, execute cb and look for any errors or the matching user
+    // find user by id, execute cb and look for any errors or the match in user
     User.findById(id).exec((err, user) => {
         // if err found or no user was found, then send an error message with status code 400
         if (err || !user) {
