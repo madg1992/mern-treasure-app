@@ -1,4 +1,5 @@
 const Category = require("../models/category");
+const Product = require('../models/product');
 
 // method for creating a new category
 // only admins will have the ability to create new product category
@@ -36,4 +37,57 @@ exports.categoryById = (req, res, next, id) => {
 // req.category (line 28 from categoryById method)
 exports.read = (req, res) => {
     return res.json(req.category);
+};
+
+// Update method is invoke after we first find the categoryById middleware.
+// The categoryById method, when ran, will make the category request available
+// in req.category
+exports.update = (req, res) => {
+    const category = req.category;
+    category.name = req.body.name;
+    category.save((err, data) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'error'
+            });
+        }
+        res.json(data);
+    });
+};
+
+
+exports.remove = (req, res) => {
+    const category = req.category;
+    // if there are any products in a category then category cannot be deleted
+    Product.find({ category }).exec((err, data) => {
+        if (data.length >= 1) {
+            return res.status(400).json({
+                message: `Sorry. You cant delete ${category.name}. It has ${data.length} associated products.`
+            });
+        } else {
+            category.remove((err, data) => {
+                if (err) {
+                    return res.status(400).json({
+                        error: 'error!'
+                    });
+                }
+                res.json({
+                    message: 'Category deleted'
+                });
+            });
+        }
+    });
+};
+
+
+// method for finding all categories
+exports.list = (req, res) => {
+    Category.find().exec((err, data) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'error'
+            });
+        }
+        res.json(data);
+    });
 };
