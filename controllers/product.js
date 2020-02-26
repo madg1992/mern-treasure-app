@@ -120,3 +120,17 @@ exports.update = (req, res) => {
         });
     });
 };
+
+exports.list = (req, res) => {
+    Product.find()
+        .select('-photo')
+        .populate('category')
+        .exec((err, products) => {
+            if (err) {
+                return res.status(400).json({
+                    error: 'Products not found'
+                });
+            }
+            res.json(products);
+        });
+};
