@@ -35,7 +35,7 @@ exports.create = (req, res) => {
             if (err) {
                 console.log('PRODUCT CREATE ERROR ', err);
                 return res.status(400).json({
-                    error: errorHandler(err)
+                    error: 'error'
                 });
             }
             res.json(result);
@@ -71,4 +71,22 @@ exports.read = (req, res) => {
     //create a separate request that will load each product's photo
     req.product.photo = undefined;
     return res.json(req.product);
+};
+
+// As in the case of the read method above, REMOVE method is invoke after we first find
+// the product by ID. the productById metod, when ran, will make the product request available
+// in req.product
+exports.remove = (req, res) => {
+    let product = req.product;
+    product.remove((err, deletedProduct) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'error'
+            });
+        }
+        res.json({
+            // deletedProduct,
+            message: 'Product deleted successfully'
+        });
+    });
 };
