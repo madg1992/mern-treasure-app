@@ -121,10 +121,30 @@ exports.update = (req, res) => {
     });
 };
 
+// method for fetching all products
 exports.list = (req, res) => {
     Product.find()
         .select('-photo')
         .populate('category')
+        .exec((err, products) => {
+            if (err) {
+                return res.status(400).json({
+                    error: 'Products not found'
+                });
+            }
+            res.json(products);
+        });
+};
+
+// method for fetching similar products within the same category
+// $ne = not including he the current product
+exports.listRelated = (req, res) => {
+    let limit = req.query.limit ? parseInt(req.query.limit) : 6;
+
+    // find similar products within the same category but not including the current product
+    Product.find({ _id: { $ne: req.product }, category: req.product.category })
+        .limit(limit)
+        .populate('category', '_id name') // with mongoose populate() we have the flexibility to reference certain fields
         .exec((err, products) => {
             if (err) {
                 return res.status(400).json({

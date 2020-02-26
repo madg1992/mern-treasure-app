@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { create, productById, read, remove, update, list } = require("../controllers/product");
+const { create, productById, read, remove, update, list, listRelated } = require("../controllers/product");
 const { requireSignin, isAuth, isAdmin } = require("../controllers/userAuth");
 const { userById } = require("../controllers/user");
 
@@ -25,6 +25,10 @@ router.put('/product/:productId/:userId', requireSignin, isAuth, isAdmin, update
 
 // fetch all products
 router.get("/products", list);
+
+// fetch all products within the same category not incuding the current product
+router.get("/products/related/:productId", listRelated);
+
 
 // if ':/userId' is in the route, then the userById method will run
 router.param("userId", userById);
