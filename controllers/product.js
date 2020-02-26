@@ -154,3 +154,26 @@ exports.listRelated = (req, res) => {
             res.json(products);
         });
 };
+
+// list all the category within all products
+exports.listCategories = (req, res) => {
+    // distinct is a mongodb method. we use it here to find all categories
+    // that are used in the Product Model - distinct to Product.
+    Product.distinct('category', {}, (err, categories) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'Categories not found'
+            });
+        }
+        res.json(categories);
+    });
+};
+
+// Middleware that will return product photo
+exports.photo = (req, res, next) => {
+    if (req.product.photo.data) {
+        res.set('Content-Type', req.product.photo.contentType);
+        return res.send(req.product.photo.data);
+    }
+    next();
+};
