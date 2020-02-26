@@ -61,10 +61,10 @@ exports.productById = (req, res, next, id) => {
         });
 };
 
-//CRUD : read method.
+// CRUD : read method.
 // refer to product route for fetching a single product
 // when productById method is ran, the product request object will be available for 
-// that specific product. the read method will respond the product from the 
+// that specific product. the read method will respond to the product from the 
 // req.product (line 59 from productById method)
 exports.read = (req, res) => {
     // sending all the photos together will cause a lot of lag; therefore, we will
