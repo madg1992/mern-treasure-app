@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { create, productById, read, remove } = require("../controllers/product");
+const { create, productById, read, remove, update } = require("../controllers/product");
 const { requireSignin, isAuth, isAdmin } = require("../controllers/userAuth");
 const { userById } = require("../controllers/user");
 
@@ -18,6 +18,10 @@ router.get('/product/:productId', read);
 // only admins can delete product
 // notice that we bring in both the userById and productById methods in the route
 router.delete('/product/:productId/:userId', requireSignin, isAuth, isAdmin, remove);
+
+// update a product
+// only admins can update product info
+router.put('/product/:productId/:userId', requireSignin, isAuth, isAdmin, update);
 
 // if ':/userId' is in the route, then the userById method will run
 router.param("userId", userById);

@@ -90,3 +90,33 @@ exports.remove = (req, res) => {
         });
     });
 };
+
+// update a product
+// only admins can update product info
+exports.update = (req, res) => {
+    let form = new formidable.IncomingForm();
+    form.keepExtensions = true;
+    form.parse(req, (err, fields, files) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'Image could not be uploaded'
+            });
+        }
+
+        let product = req.product;
+        // extend method is from lodash. the extend method take in two 
+        // parameters of 'product' which is the product itself which is obtained
+        // when the productById method is invoked in the route, and 
+        // 'fields', which is the updated fields
+        product = _.extend(product, fields);
+
+        product.save((err, result) => {
+            if (err) {
+                return res.status(400).json({
+                    error: errorHandler(err)
+                });
+            }
+            res.json(result);
+        });
+    });
+};
