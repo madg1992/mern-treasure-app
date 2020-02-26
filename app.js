@@ -32,6 +32,10 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(expressValidator());
+// the cors package is used so that our API will be able to handle request
+// coming from different origin. backend might be on port 8080 while
+// frontend may be running on port 3000. 
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes middleware
