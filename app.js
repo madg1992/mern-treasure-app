@@ -13,6 +13,9 @@ const userRoutes = require('./routes/user');
 const categoryRoutes = require('./routes/category');
 const productRoutes = require('./routes/product');
 
+// import custom middlewares
+const userAuthMiddleware = require('./middlewares/userAuthMiddleware');
+
 // initialize app
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -42,7 +45,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', userAuthRoutes);
 app.use('/api', userRoutes);
 app.use('/api', categoryRoutes);
-app.use('/api', productRoutes);
+app.use('/api', userAuthMiddleware, productRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`);
